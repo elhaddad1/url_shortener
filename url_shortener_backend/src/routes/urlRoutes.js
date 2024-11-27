@@ -4,7 +4,9 @@ const { authenticate } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.post('/shorten', authenticate, urlController.shorten);
+router.get('/get', urlController.getURLs);
+router.post('/shorten',  urlController.shortenUrl);  
 router.get('/:slug', urlController.redirect);
+
 
 module.exports = router;

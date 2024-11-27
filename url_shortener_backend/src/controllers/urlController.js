@@ -1,19 +1,39 @@
 const urlService = require('../services/urlService');
 
-exports.shorten = async (req, res, next) => {
+exports.shortenUrl = async (req, res, next) => {
     try {
-        const shortUrl = await urlService.shorten(req.body);
-        res.status(201).json(shortUrl);
+        const { originalUrl } = req.body;
+
+        if (!originalUrl) {
+            return res.status(400).json({ error: 'Original URL is required.' });
+        }
+
+        const newUrl = await urlService.createShortUrl(originalUrl);
+
+        return res.status(201).json({
+            message: 'Short URL created successfully.',
+            shortUrl: newUrl.shortUrl,
+        });
     } catch (error) {
-        next(error);
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getURLs = async (req, res, next) => {
+    try {
+        return res.status(200).json({
+            message: 'urls ',
+            urls: await urlService.getURLs()
+        });
+    } catch (error) {
+        next(error); 
     }
 };
 
 exports.redirect = async (req, res, next) => {
     try {
-        const originalUrl = await urlService.getOriginalUrl(req.params.slug);
-        res.redirect(originalUrl);
+        return res.redirect(await urlService.getOriginalUrl(req.params.slug));
     } catch (error) {
-        next(error);
+        next(error); 
     }
 };

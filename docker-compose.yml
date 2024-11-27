@@ -8,13 +8,16 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./url_shortener_backend:/app
-      - /app/node_modules
+      - ./url_shortener_backend:/app  
+      - /app/node_modules             
     working_dir: /app
-    command: npm run dev
+    command: npm run dev           
     environment:
       NODE_ENV: development
-
+      MONGO_URI: mongodb://mongo:27017/url_shortener
+    depends_on:
+      - mongo
+      
   website:
     build:
       context: ./url_shortener_website
@@ -23,6 +26,22 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./url_shortener_website:/app
+      - ./url_shortener_website:/app  
     environment:
       - NODE_ENV=development
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db  
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  mongo_data:

@@ -1,14 +1,35 @@
 version: "3.8"
+
 services:
   backend:
-    build: .
+    build:
+      context: ./url_shortener_backend
     container_name: url_shortener_backend
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
-      - /app/node_modules
+      - ./url_shortener_backend:/app  # Mount local backend directory to container
+      - /app/node_modules             # Mount node_modules folder to persist dependencies
     working_dir: /app
-    command: npm run dev
+    command: npm run dev             # Ensure you're using nodemon or a similar tool for live-reloading
     environment:
       NODE_ENV: development
+      MONGO_URI: mongodb://mongo:27017/url_shortener
+    depends_on:
+      - mongo
+      
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db  # Persist MongoDB data
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  mongo_data:
