@@ -11,12 +11,13 @@ services:
       - ./url_shortener_backend:/app  # Mount local backend directory to container
       - /app/node_modules             # Mount node_modules folder to persist dependencies
     working_dir: /app
-    command: npm run dev             # Ensure you're using nodemon or a similar tool for live-reloading
     environment:
       NODE_ENV: development
       MONGO_URI: mongodb://mongo:27017/url_shortener
+      SEED_DB: false
     depends_on:
       - mongo
+    command: /bin/bash -c "npm test && npm start" 
       
   mongo:
     image: mongo:latest

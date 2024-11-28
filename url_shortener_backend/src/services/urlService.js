@@ -1,60 +1,54 @@
+const BaseService = require('./baseService');
 const UrlModel = require('../models/Url');
 const crypto = require('crypto');
 const logger = require('../utils/logger');
 
-exports.createShortUrl = async (originalUrl) => {
-    try {
-        const urlWithTimestamp = originalUrl + Date.now();
-        const hash = crypto.createHash('sha256').update(urlWithTimestamp).digest('hex');
-        const shortHash = hash.substring(0, 8);
-        const randomComponent = getRandomString(3);
-        const shortUrl = shortHash + randomComponent;
-
-        logger.log(`Generated short URL: ${shortUrl}`);
-
-        const newUrl = new UrlModel({
-            originalUrl,
-            shortUrl,
-        });
-
-        await newUrl.save();
-        return newUrl;  
-    } catch (error) {
-        logger.error('Error creating short URL:', error);
-        throw new Error('Error creating short URL'); 
+class UrlService extends BaseService {
+    constructor() {
+        super(UrlModel);
     }
-};
 
-exports.getURLs = async()=>{
-    try {
-        return await UrlModel.find();
-    } catch (error) {
-        logger.error('Error fetching URLs:', error);
-        throw new Error('Error fetching URLs'); 
-    }
-};
+    async createShortUrl(originalUrl, userId = 'System') {
+        try {
+            const urlWithTimestamp = originalUrl + Date.now();
+            const hash = crypto.createHash('sha256').update(urlWithTimestamp).digest('hex');
+            const shortHash = hash.substring(0, 8);
+            const randomComponent = this.getRandomString(3);
+            const shortUrl = shortHash + randomComponent;
 
-exports.getOriginalUrl = async (shortUrl) => {
-    try {
-        const urlRecord = await UrlModel.findOne({ shortUrl });
+            logger.log(`Generated short URL: ${shortUrl}`);
 
-        if (urlRecord) {
-            return urlRecord.originalUrl;
-        } else {
-            throw new Error('Short URL not found');
+            const newUrl = await this.create({
+                originalUrl,
+                shortUrl,
+                user: userId,
+                createdBy: userId
+            });
+
+            logger.log(`New URL: ${newUrl}`);
+
+            return newUrl;
+        } catch (error) {
+            logger.error('Error creating short URL:', error);
+            throw new Error('Error creating short URL');
         }
-    } catch (error) {
-        logger.error('Error fetching original URL:', error);
-        throw new Error('Error fetching original URL'); 
     }
-};
 
-// generate a random alphanumeric string
-function getRandomString(length) {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    async getOriginalUrl(shortUrl) {
+        try {
+            const urlRecord = await UrlModel.findOne({ shortUrl });
+            if (!urlRecord) return null;
+            return urlRecord.originalUrl;
+        } catch (error) {
+            logger.error('Error fetching original URL:', error);
+            throw new Error('Error fetching original URL');
+        }
     }
-    return result;
+
+    getRandomString(length) {
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        return Array.from({ length }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
+    }
 }
+
+module.exports = new UrlService();

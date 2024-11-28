@@ -1,6 +1,8 @@
+const authService = require('../services/authService');
 const urlService = require('../services/urlService');
+const logger = require('../utils/logger');
 
-exports.shortenUrl = async (req, res, next) => {
+exports.shortenUrl = async (req, res) => {
     try {
         const { originalUrl } = req.body;
 
@@ -8,7 +10,9 @@ exports.shortenUrl = async (req, res, next) => {
             return res.status(400).json({ error: 'Original URL is required.' });
         }
 
-        const newUrl = await urlService.createShortUrl(originalUrl);
+        const user = await authService.getUserByEmail('dev.msalah@gmail.com');
+        logger.log(`user id => : ${user.id}`);
+        const newUrl = await urlService.createShortUrl(originalUrl , user.id); 
 
         return res.status(201).json({
             message: 'Short URL created successfully.',
@@ -19,21 +23,63 @@ exports.shortenUrl = async (req, res, next) => {
     }
 };
 
-exports.getURLs = async (req, res, next) => {
+exports.redirect = async (req, res) => {
     try {
-        return res.status(200).json({
-            message: 'urls ',
-            urls: await urlService.getURLs()
-        });
+        const originalUrl = await urlService.getOriginalUrl(req.params.slug); 
+        if (!originalUrl) {
+            return res.status(404).json({ error: 'Original URL not found.' });
+        }
+        return res.redirect(originalUrl);
     } catch (error) {
-        next(error); 
+        return res.status(500).json({ error: error.message });
     }
 };
 
-exports.redirect = async (req, res, next) => {
+exports.getURLs = async (req, res) => {
     try {
-        return res.redirect(await urlService.getOriginalUrl(req.params.slug));
+        const urls = await urlService.getAll(); // using BaseService's getAll method
+        return res.status(200).json({
+            message: 'URLs fetched successfully.',
+            urls: urls,
+        });
     } catch (error) {
-        next(error); 
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getUrlById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const url = await urlService.getById(id);  // Using BaseService's getById method
+        return res.status(200).json(url);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+exports.updateUrl = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedData = req.body;
+        const updatedUrl = await urlService.update(id, updatedData);  // Using BaseService's update method
+        return res.status(200).json({
+            message: 'URL updated successfully.',
+            url: updatedUrl,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+exports.deleteUrl = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedUrl = await urlService.delete(id);  // Using BaseService's delete method
+        return res.status(200).json({
+            message: 'URL deleted successfully.',
+            url: deletedUrl,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
     }
 };

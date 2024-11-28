@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const urlRoutes = require('./routes/urlRoutes');
+const planRoutes = require('./routes/planRoutes');
+const featureRoutes = require('./routes/featureRoutes');
 const subscriptionRoutes = require('./routes/subscriptionRoutes');
 
 dotenv.config();
@@ -17,8 +19,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/url', urlRoutes);
+app.use('/api/plan', planRoutes);
+app.use('/api/feature', featureRoutes);
 app.use('/subscription', subscriptionRoutes);
 
 app.use((err, req, res, next) => {

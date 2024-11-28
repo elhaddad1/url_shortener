@@ -4,9 +4,11 @@ const { authenticate } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.get('/get', urlController.getURLs);
+router.get('/', urlController.getURLs);
 router.post('/shorten',  urlController.shortenUrl);  
-router.get('/:slug', urlController.redirect);
-
+router.get('/r/:slug', urlController.redirect);
+router.get('/:id', urlController.getUrlById);  
+router.put('/:id', urlController.updateUrl);
+router.delete('/:id', urlController.deleteUrl);
 
 module.exports = router;

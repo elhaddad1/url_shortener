@@ -11,13 +11,14 @@ services:
       - ./url_shortener_backend:/app  
       - /app/node_modules             
     working_dir: /app
-    command: npm run dev           
     environment:
       NODE_ENV: development
       MONGO_URI: mongodb://mongo:27017/url_shortener
+      SEED_DB: false
     depends_on:
       - mongo
-      
+    command: /bin/bash -c "npm test && npm start" 
+    
   website:
     build:
       context: ./url_shortener_website
