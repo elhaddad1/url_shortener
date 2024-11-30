@@ -1,19 +1,21 @@
 const log = (message) => {
-    console.log(`[LOG]: ${message}`);
+    const timestamp = new Date().toISOString();
+    console.log(`[LOG] [${timestamp}]: ${message}`);
 };
 
 const error = (message) => {
-    console.error(`[ERROR]: ${message}`);
+    const timestamp = new Date().toISOString();
+    console.error(`[ERROR] [${timestamp}]: ${message}`);
 };
 
 const info = (message) => {
-    console.info(`[INFO]: ${message}`);
+    const timestamp = new Date().toISOString();
+    console.info(`[INFO] [${timestamp}]: ${message}`);
 };
 
 const warn = (message) => {
-    console.warn(`[WARN]: ${message}`);
+    const timestamp = new Date().toISOString();
+    console.warn(`[WARN] [${timestamp}]: ${message}`);
 };
-
-
 
 module.exports = { log, error, info, warn };

@@ -1,12 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const fs = require('fs');
+const path = require('path');
 const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
-const urlRoutes = require('./routes/urlRoutes');
-const planRoutes = require('./routes/planRoutes');
-const featureRoutes = require('./routes/featureRoutes');
-const subscriptionRoutes = require('./routes/subscriptionRoutes');
 
 dotenv.config();
 
@@ -18,13 +15,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/url', urlRoutes);
-app.use('/api/plan', planRoutes);
-app.use('/api/feature', featureRoutes);
-app.use('/subscription', subscriptionRoutes);
+// Dynamic version handling
+app.use('/api/:version', (req, res, next) => {
+    const version = req.params.version;
+    const versionPath = path.join(__dirname, `routes/${version}`);
 
+    if (!fs.existsSync(versionPath)) {
+        return res.status(404).json({ error: `API version ${version} not supported.` });
+    }
+
+    const versionRoutes = require(versionPath);
+    app.use(`/api/${version}`, versionRoutes);
+    next();
+});
+
+// Global error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: err.message });
