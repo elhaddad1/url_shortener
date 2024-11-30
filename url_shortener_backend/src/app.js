@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
 const connectDB = require('./config/db');
+const { swaggerSpec, swaggerUi } = require('./config/swagger'); 
 
 dotenv.config();
 
@@ -15,6 +16,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Swagger UI endpoint
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Dynamic version handling
 app.use('/api/:version', (req, res, next) => {
     const version = req.params.version;
@@ -25,7 +29,9 @@ app.use('/api/:version', (req, res, next) => {
     }
 
     const versionRoutes = require(versionPath);
+    
     app.use(`/api/${version}`, versionRoutes);
+    
     next();
 });
 
