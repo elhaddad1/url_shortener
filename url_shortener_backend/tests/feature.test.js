@@ -3,8 +3,12 @@ const request = require('supertest');
 const app = require('../src/app');
 const mongoose = require('mongoose');
 
-describe('Feature Controller Tests', () => {
+jest.mock('../src/middleware/rateLimiterMiddleware', () => {
+    return () => (req, res, next) => next(); // Skip rate limiting logic
+});
 
+describe('Feature Controller Tests', () => {
+   
     describe('POST /api/v1/feature', () => {
         afterAll(async () => {
             await mongoose.connection.close();

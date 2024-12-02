@@ -3,6 +3,10 @@ const request = require('supertest');
 const app = require('../src/app');
 const mongoose = require('mongoose');
 
+jest.mock('../src/middleware/rateLimiterMiddleware', () => {
+    return () => (req, res, next) => next(); // Skip rate limiting logic
+});
+
 describe('URL Controller Tests', () => {
 
     describe('POST /api/v1/url/shorten', () => {
