@@ -51,14 +51,14 @@ import { CommonModule } from '@angular/common';
 export class CardComponent implements OnInit {
   // public props
   @Input() cardTitle: string;
-  @Input() cardClass: string;
-  @Input() blockClass: string;
-  @Input() headerClass: string;
+  @Input() cardClass!: string;
+  @Input() blockClass!: string;
+  @Input() headerClass!: string;
   @Input() options: boolean;
   @Input() hidHeader: boolean;
   @Input() customHeader: boolean;
 
-  animation: string;
+  animation!: string;
   fullIcon: string;
   isAnimating: boolean;
   collapsedCard: string;
@@ -100,9 +100,9 @@ export class CardComponent implements OnInit {
     setTimeout(() => {
       this.cardClass = animation === 'zoomOut' ? '' : this.cardClass;
       if (this.cardClass === 'full-card') {
-        document.querySelector('body').style.overflow = 'hidden';
+        document.querySelector('body')!.style.overflow = 'hidden';
       } else {
-        document.querySelector('body').removeAttribute('style');
+        document.querySelector('body')!.removeAttribute('style');
       }
     }, 500);
   }

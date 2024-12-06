@@ -6,12 +6,20 @@ import { Location, NgClass, isPlatformBrowser } from '@angular/common';
 import { NavBarComponent } from './theme/layout/admin/nav-bar/nav-bar.component';
 import { BreadcrumbsComponent } from './theme/shared/components/breadcrumbs/breadcrumbs.component';
 import { ConfigurationComponent } from './theme/layout/admin/configuration/configuration.component';
+import { SpinnerComponent } from './theme/shared/components/spinner/spinner.component';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faBars, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
+    SpinnerComponent,
     NgClass,
     NavigationComponent,
     NavBarComponent,
@@ -23,46 +31,11 @@ import { ConfigurationComponent } from './theme/layout/admin/configuration/confi
 })
 export class AppComponent {
   title = 'url_shortener_portal';
-  navCollapsed: any;
-  navCollapsedMob?: boolean;
-  windowWidth?: number;
 
-  constructor(private location: Location, @Inject(PLATFORM_ID) private platformId: object) {
-    let currentUrl = this.location.path();
-
-    // Access `window` only if in browser
-    if (isPlatformBrowser(this.platformId)) {
-      this.windowWidth = window.innerWidth;
-      this.navCollapsed = this.windowWidth >= 992 ? DattaConfig.isCollapseMenu : false;
-    } else {
-      this.windowWidth = undefined; // No `window` on the server
-      this.navCollapsed = false;
-    }
-
-    this.navCollapsedMob = false;
+  constructor(library: FaIconLibrary) {
+    library.addIcons(faTwitter, faGithub, faBars, faCircle);
+    library.addIcons(faFacebookF); // Register only `facebook-f` icon
+    library.addIconPacks(fas,fab);
   }
 
-  navMobClick() {
-    if (this.navCollapsedMob && !document.querySelector('app-navigation.pcoded-navbar')!.classList.contains('mob-open')) {
-      this.navCollapsedMob = !this.navCollapsedMob;
-      setTimeout(() => {
-        this.navCollapsedMob = !this.navCollapsedMob;
-      }, 100);
-    } else {
-      this.navCollapsedMob = !this.navCollapsedMob;
-    }
-  }
-
-  handleKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Escape') {
-      this.closeMenu();
-    }
-  }
-
-  closeMenu() {
-    const navigationElement = document.querySelector('app-navigation.pcoded-navbar');
-    if (navigationElement?.classList.contains('mob-open')) {
-      navigationElement.classList.remove('mob-open');
-    }
-  }
 }

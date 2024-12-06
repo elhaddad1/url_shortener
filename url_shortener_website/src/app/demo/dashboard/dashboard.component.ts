@@ -1,8 +1,6 @@
 // angular import
 import { Component, OnInit } from '@angular/core';
 
-// project import
-import { SharedModule } from 'src/app/theme/shared/shared.module';
 
 declare const AmCharts: any;
 
@@ -15,14 +13,17 @@ import '../../../assets/charts/amchart/ammap.min.js';
 import '../../../assets/charts/amchart/usaLow.js';
 import '../../../assets/charts/amchart/radar.js';
 import '../../../assets/charts/amchart/worldLow.js';
+import { CardComponent } from '../../theme/shared/components/card/card.component';
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 
-import dataJson from 'src/fake-data/map_data';
-import mapColor from 'src/fake-data/map-color-data.json';
+import dataJson from '../../../fake-data/map_data';
+import mapColor from '../../../fake-data/map-color-data.json';
+
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SharedModule],
+  imports: [CardComponent,NgbProgressbarModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
