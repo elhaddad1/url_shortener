@@ -3,12 +3,21 @@ version: "3.8"
 services:
   angular-app:
     build:
-      context: .
+      context: .  # The current directory where the Dockerfile is located
       dockerfile: Dockerfile
     container_name: url_shortener_website
     ports:
-      - "8080:80" # Map port 8080 on the host to port 80 in the container
+      - "8080:4200"  # Expose the Angular app on port 8080 of the host
     volumes:
-      - .:/app
+      - ./url_shortener_website:/usr/src/app:delegated  # Mount the application code into the container
+      - /usr/src/app/node_modules  # Prevent node_modules from being overwritten
+    working_dir: /usr/src/app
     environment:
       - NODE_ENV=development
+    command: /bin/bash -c "ls -la /usr/src/app && npm install && ng serve --host 0.0.0.0 --disable-host-check"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

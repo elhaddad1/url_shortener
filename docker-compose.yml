@@ -34,15 +34,17 @@ services:
       dockerfile: Dockerfile
     container_name: url_shortener_website
     ports:
-      - "8080:80"
+      - "4200:4200" # Angular development server port
     volumes:
-      - ./url_shortener_website:/app
-    working_dir: /app
+      - ./url_shortener_website:/usr/src/app:delegated
+      - /usr/src/app/node_modules # Exclude node_modules from being overwritten
+    working_dir: /usr/src/app
     environment:
       - NODE_ENV=development
     networks:
       - app-network
-      
+    command: /bin/bash -c "npm install && ng serve --host 0.0.0.0 --disable-host-check"
+
   mongo:
     image: mongo:latest
     container_name: mongo
@@ -58,7 +60,7 @@ services:
       timeout: 10s
     networks:
       - app-network
-      
+
   redis:
     image: redis:latest
     container_name: redis
@@ -75,7 +77,7 @@ services:
 networks:
   app-network:
     driver: bridge
-    
+
 volumes:
   mongo_data:
     driver: local

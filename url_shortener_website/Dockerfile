@@ -1,17 +1,15 @@
-FROM node:18 AS build
+FROM node:22
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY package*.json ./
+
+RUN npm install -g @angular/cli
 
 RUN npm install
 
 COPY . .
-RUN npm run build --dev
-FROM nginx:1.23
 
-COPY --from=build /app/dist/url_shortener_portal /usr/share/nginx/html
+EXPOSE 4200
 
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["ng", "serve", "--host", "0.0.0.0", "--disable-host-check"]
