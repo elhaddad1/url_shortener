@@ -1,1 +1,32 @@
-<p>url-shortener works!</p>
+<sb-layout-blog>
+  <sb-clean-header backgroundImage='url("assets/img/home-bg-2.jpg")' heading="Url Shorten"
+  subHeading="Simplify your links, track performance" [siteHeading]="true"></sb-clean-header>
+  <div class="urlshortener-container">
+    <h2>Shorten Your URL</h2>
+    <form (submit)="shortenUrl()">
+      <div class="form-group">
+        <label for="longUrl">Enter URL:</label>
+        <input
+          type="url"
+          id="longUrl"
+          [(ngModel)]="longUrl"
+          name="longUrl"
+          class="form-control"
+          placeholder="Enter your URL here"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Shorten</button>
+    </form>
+  
+    <div *ngIf="shortUrl" class="result mt-4">
+      <h4>Shortened URL:</h4>
+      <p>
+        <a [href]="shortUrl" target="_blank">{{ shortUrl }}</a>
+      </p>
+    </div>
+  </div>
+  
+          
+
+</sb-layout-blog>

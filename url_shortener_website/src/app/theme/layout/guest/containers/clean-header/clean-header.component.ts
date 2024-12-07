@@ -3,14 +3,14 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
-    selector: 'sb-clean-blog-header',
+    selector: 'sb-clean-header',
     standalone:true,
     imports:[CommonModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './clean-blog-header.component.html',
-    styleUrls: ['clean-blog-header.component.scss'],
+    templateUrl: './clean-header.component.html',
+    styleUrls: ['clean-header.component.scss'],
 })
-export class CleanBlogHeaderComponent implements OnInit {
+export class CleanHeaderComponent implements OnInit {
     @Input() backgroundImage!: string;
     @Input() heading!: string;
     @Input() subHeading!: string;
@@ -21,6 +21,6 @@ export class CleanBlogHeaderComponent implements OnInit {
 
     constructor(private domSanitizer: DomSanitizer) {}
     ngOnInit() {
-        //this.safeBackgroudImage = this.domSanitizer.bypassSecurityTrustStyle(this.backgroundImage);
+        this.safeBackgroudImage = this.domSanitizer.bypassSecurityTrustStyle(this.backgroundImage);
     }
 }

@@ -11,11 +11,11 @@ import { TopNavComponent } from '../../containers/top-nav/top-nav.component';
     standalone:true,
     providers:[NavigationService,AuthUtilsService,UtilityService,HttpClient],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './layout-blog.component.html',
-    styleUrls: ['layout-blog.component.scss'],
+    templateUrl: './layout-guest.component.html',
+    styleUrls: ['layout-guest.component.scss'],
     imports: [FooterComponent,TopNavComponent],
 })
-export class LayoutBlogComponent implements OnInit {
+export class LayoutGuestComponent implements OnInit {
     constructor() {}
     ngOnInit() {}
 }

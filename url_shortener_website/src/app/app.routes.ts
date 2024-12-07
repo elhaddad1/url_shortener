@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardRoutes } from './app/dashboard/app.dashboard-routing';
-import { GuestRoutes } from './app/features/app.dashboard-routing';
+import { GuestRoutes } from './app/features/app.guest-routing';
 import { AuthRoutes } from './app/auth/auth-routing.module';
 
 

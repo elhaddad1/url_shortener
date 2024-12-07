@@ -11,13 +11,13 @@ import { UtilityService } from '../../../utility/utility.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TopNavComponent } from '../../../theme/layout/guest/containers/top-nav/top-nav.component';
 import { FooterComponent } from '../../../theme/layout/guest/containers/footer/footer.component';
-import { LayoutBlogComponent } from '../../../theme/layout/guest/layouts/layout-blog/layout-blog.component';
-import { CleanBlogHeaderComponent } from '../../../theme/layout/guest/containers/clean-blog-header/clean-blog-header.component';
+import { LayoutGuestComponent } from '../../../theme/layout/guest/layouts/layout-guest/layout-guest.component';
+import { CleanHeaderComponent } from '../../../theme/layout/guest/containers/clean-header/clean-header.component';
 
 @Component({
   selector: 'app-usr-home',
   standalone: true,
-  imports: [CommonModule,RouterModule,NgbCollapseModule,FontAwesomeModule,HttpClientModule,LayoutBlogComponent,CleanBlogHeaderComponent],
+  imports: [CommonModule,RouterModule,NgbCollapseModule,FontAwesomeModule,HttpClientModule,LayoutGuestComponent,CleanHeaderComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'], // Corrected typo: `styleUrl` -> `styleUrls`
   providers:[NavigationService,AuthUtilsService,UtilityService,HttpClient]

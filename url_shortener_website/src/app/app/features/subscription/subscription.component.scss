@@ -1,0 +1,42 @@
+.subscription-container {
+    text-align: center;
+    margin-top: 40px;
+  
+    .plans {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+  
+      .plan {
+        border: 1px solid #ddd;
+        padding: 20px;
+        width: 300px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+        h3 {
+          margin-bottom: 15px;
+        }
+  
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 15px 0;
+  
+          li {
+            margin: 5px 0;
+          }
+        }
+  
+        .btn {
+          margin-top: 10px;
+        }
+  
+        &.premium {
+          border-color: #007bff;
+          background-color: #f9f9ff;
+        }
+      }
+    }
+  }
+  

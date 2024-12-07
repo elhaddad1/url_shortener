@@ -1,1 +1,36 @@
-<p>subscription works!</p>
+<sb-layout-blog>
+  <sb-clean-header backgroundImage='url("assets/img/home-bg-2.jpg")' heading="Url Shorten"
+  subHeading="Simplify your links, track performance" [siteHeading]="true"></sb-clean-header>
+  <div class="subscription-container">
+    <h2>Choose Your Plan</h2>
+    <div class="plans">
+      <!-- Free Plan -->
+      <div class="plan">
+        <h3>Free Plan</h3>
+        <p><strong>$0</strong> / month</p>
+        <ul>
+          <li>Basic URL shortening</li>
+          <li>Limited Analytics</li>
+          <li>Up to 50 shortened links per month</li>
+        </ul>
+        <button (click)="selectPlan('Free')" class="btn btn-outline-primary">Choose Free</button>
+      </div>
+  
+      <!-- Premium Plan -->
+      <div class="plan premium">
+        <h3>Premium Plan</h3>
+        <p><strong>$10</strong> / month</p>
+        <ul>
+          <li>Custom URL shortening</li>
+          <li>Detailed Analytics</li>
+          <li>Unlimited shortened links</li>
+          <li>Priority Support</li>
+        </ul>
+        <button (click)="selectPlan('Premium')" class="btn btn-primary">Choose Premium</button>
+      </div>
+    </div>
+  </div>
+  
+                  
+
+</sb-layout-blog>

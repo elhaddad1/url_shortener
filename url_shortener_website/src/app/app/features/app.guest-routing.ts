@@ -18,6 +18,11 @@ export const GuestRoutes: Routes = [
      import('./home/home.component').then((c) => c.HomeComponent),
  },
  {
+   path: 'about',
+   loadComponent: () =>
+     import('./about/about.component').then((c) => c.AboutComponent),
+ },
+ {
   path: '',
   redirectTo: 'home',
   pathMatch: 'full',

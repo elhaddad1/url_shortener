@@ -4,19 +4,16 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import { LayoutGuestComponent } from '../../../theme/layout/guest/layouts/layout-guest/layout-guest.component';
 import { CleanHeaderComponent } from '../../../theme/layout/guest/containers/clean-header/clean-header.component';
+import { LayoutGuestComponent } from '../../../theme/layout/guest/layouts/layout-guest/layout-guest.component';
 
 @Component({
-  selector: 'app-subscription',
+  selector: 'app-about',
   standalone: true,
   imports: [CommonModule,RouterModule,NgbCollapseModule,FontAwesomeModule,HttpClientModule,LayoutGuestComponent,CleanHeaderComponent],
-  templateUrl: './subscription.component.html',
-  styleUrl: './subscription.component.scss'
+  templateUrl: './about.component.html',
+  styleUrl: './about.component.scss'
 })
-export class SubscriptionComponent {
-  selectPlan(plan: string): void {
-    alert(`You selected the ${plan} plan!`);
-    // Logic to handle subscription, e.g., redirect to payment gateway.
-  }
+export class AboutComponent {
+
 }
