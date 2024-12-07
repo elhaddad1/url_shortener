@@ -1,1 +1,39 @@
-<p>login works!</p>
+<div class="dialog-overlay">
+  <div class="login-dialog">
+    <h2 class="dialog-title">Login</h2>
+    <form (ngSubmit)="onSubmit()" class="dialog-form">
+      <div class="form-group">
+        <label for="email">
+          <i class="fas fa-envelope"></i> Email:
+        </label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          [(ngModel)]="credentials.email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">
+          <i class="fas fa-lock"></i> Password:
+        </label>
+        <input
+          id="password"
+          type="password"
+          class="form-control"
+          [(ngModel)]="credentials.password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+      <p class="dialog-footer" *ngIf="false">
+        Don't have an account? <a href="#" (click)="openRegister()">Sign Up</a>
+      </p>
+    </form>
+  </div>
+</div>

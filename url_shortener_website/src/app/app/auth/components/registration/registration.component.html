@@ -1,1 +1,53 @@
-<p>registration works!</p>
+<div class="dialog-overlay">
+  <div class="register-dialog">
+    <h2 class="dialog-title">Register</h2>
+    <form (ngSubmit)="onSubmit()" class="dialog-form">
+      <div class="form-group">
+        <label for="name">
+          <i class="fas fa-user"></i> Name:
+        </label>
+        <input
+          id="name"
+          type="text"
+          class="form-control"
+          [(ngModel)]="data.name"
+          name="name"
+          placeholder="Enter your name"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">
+          <i class="fas fa-envelope"></i> Email:
+        </label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          [(ngModel)]="data.email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">
+          <i class="fas fa-lock"></i> Password:
+        </label>
+        <input
+          id="password"
+          type="password"
+          class="form-control"
+          [(ngModel)]="data.password"
+          name="password"
+          placeholder="Create a password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+      <p class="dialog-footer" *ngIf="false">
+        Already have an account? <a href="#" (click)="openLogin()">Login</a>
+      </p>
+    </form>
+  </div>
+</div>

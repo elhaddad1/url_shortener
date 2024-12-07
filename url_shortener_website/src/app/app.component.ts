@@ -18,14 +18,8 @@ import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
-    SpinnerComponent,
-    NgClass,
-    NavigationComponent,
-    NavBarComponent,
-    BreadcrumbsComponent,
-    ConfigurationComponent
-  ],
+    RouterOutlet
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'] // Fixed typo: `styleUrl` -> `styleUrls`
 })
@@ -37,5 +31,6 @@ export class AppComponent {
     library.addIcons(faFacebookF); // Register only `facebook-f` icon
     library.addIconPacks(fas,fab);
   }
+  
 
 }

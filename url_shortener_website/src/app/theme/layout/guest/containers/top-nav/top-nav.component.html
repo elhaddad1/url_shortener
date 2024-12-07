@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
+        <!-- Toggle button for mobile view -->
         <button 
             class="navbar-toggler navbar-toggler-right" 
             type="button" 
@@ -9,16 +10,19 @@
             aria-label="Toggle navigation">
             <fa-icon class="ml-1" [icon]="['fas', 'bars']"></fa-icon>
         </button>
+
+        <!-- Navbar collapse -->
         <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <!-- Left-side menu items -->
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/subscription">subscription</a>
+                    <a class="nav-link" routerLink="/subscription">Subscription</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/urlshortener">Url Shortener</a>
+                    <a class="nav-link" routerLink="/urlshortener">URL Shortener</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/about">About</a>
@@ -36,9 +40,16 @@
                     <a class="nav-link pointer" (click)="editPost()">Edit Post</a>
                 </li>
             </ul>
-            <form class="form-inline ml-lg-2" *ngIf="isLoggedIn">
-                <a class="btn btn-primary" routerLink="/new">New Post</a>
-            </form>
+
+            <!-- Right-side menu items (Sign In and Sign Up) -->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link pointer" (click)="openSignInDialog()">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pointer" (click)="openSignUpDialog()">Sign Up</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

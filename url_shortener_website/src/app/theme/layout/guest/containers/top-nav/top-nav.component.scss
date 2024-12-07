@@ -9,3 +9,15 @@
     padding: 0 10px !important;
 }
 
+.navbar-nav .nav-link.pointer {
+    font-weight: bold;
+    color: #007bff; /* Bootstrap primary color */
+    cursor: pointer;
+}
+
+.navbar-nav .nav-link.pointer:hover {
+    text-decoration: underline;
+    color: #0056b3; /* Darker shade for hover effect */
+}
+
+
